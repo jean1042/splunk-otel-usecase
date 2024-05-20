@@ -1,0 +1,95 @@
+# Copyright 2018 Google LLC
+#
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adservice2
+spec:
+  selector:
+    matchLabels:
+      app: adservice
+  template:
+    metadata:
+      labels:
+        app: adservice
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: adservice
+          image: DOCKER_IMAGE_URL/adservice:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9555
+          env:
+            - name: PORT
+              value: "9555"
+            - name: OTEL_SERVICE_NAME
+              value: "adservice"
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: JAVA_TOOL_OPTIONS
+              value: -javaagent:/opt/sfx/splunk-otel-javaagent.jar
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+            - name: SPLUNK_OTEL_AGENT
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://$(SPLUNK_OTEL_AGENT):4317"
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: "deployment.environment=dev,service.version=1.0"
+          command:
+             - java
+             - -javaagent:/opt/sfx/splunk-otel-javaagent.jar # HERE
+             # - -jar adService.jar
+             - -Dsplunk.metrics.enabled=true
+             - -Dotel.javaagent.debug=true
+             - -Dsplunk.trace-response-header.enabled=false
+          resources:
+            requests:
+              cpu: 200m
+              memory: 300Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi
+          readinessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 25
+            exec:
+              command: ['/bin/grpc_health_probe', '-addr=:9555']
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            exec:
+              command: ['/bin/grpc_health_probe', '-addr=:9555']
+      tolerations:
+      - key: "eks.amazonaws.com/compute-type"
+        operator: "Equal"
+        value: "fargate"
+        effect: "NoSchedule"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adservice2
+spec:
+  type: ClusterIP
+  selector:
+    app: adservice
+  ports:
+    - name: grpc
+      port: 9555
+      targetPort: 9555
