@@ -29,5 +29,5 @@ Server-Timing: traceparent;desc="00-<serverTraceId>-<serverSpanId>-01"
 spec.containers.command에 아래 cmd를 삽입 
 ```-Dsplunk.trace-response-header.enabled=false```
 
-[구성방법](./java-disabling-server-trace/disabling-server-trace.yaml) <br>
+[구성방법](./java-disabling-server-trace/disabling-server-trace.yaml) <br>
 
