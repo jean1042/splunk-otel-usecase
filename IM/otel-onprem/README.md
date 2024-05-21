@@ -4,12 +4,34 @@ Providing dynamic usecases for opentelemetry collector IM
 #### AWS 
 #### Azure
 
-## Collector Installation
+## Opentelemetry Collector Installation
 ![Collector Installation](./collectorinstallation.png)
 
 ### Prerequisites 
 [1. Collector requirements 체크](https://docs.splunk.com/observability/en/gdi/opentelemetry/otel-requirements.html#collector-requirements
 ) 
+ 
+#### Linux
+
+Splunk Observability Collector 지원 OS/version
+
+- Amazon Linux: 2, 2023. Log collection with Fluentd is not currently supported for Amazon Linux 2023.
+
+- CentOS, Red Hat, or Oracle: 7, 8, 9
+
+- Debian: 9, 10, 11
+
+- SUSE: 12, 15 for version 0.34.0 or higher. Log collection with Fluentd is not currently supported.
+
+- Ubuntu: 16.04, 18.04, 20.04, and 22.04
+
+- Rocky Linux: 8, 9
+
+#### Windows 
+##### Installer script
+- Windows 10 Pro and Home, Windows Server 2016, 2019, 2022
+
+<br>
 
 [2. Splunk Domain 네트워크 허용](https://docs.splunk.com/observability/en/admin/authentication/allow-services.html#allow-splunk-observability-cloud-services-in-your-network)
 
