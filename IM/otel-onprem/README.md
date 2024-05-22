@@ -12,7 +12,6 @@ Providing dynamic usecases for opentelemetry collector IM
 ) 
  
 #### Linux
-
 Splunk Observability Collector 지원 OS/version
 
 - Amazon Linux: 2, 2023. Log collection with Fluentd is not currently supported for Amazon Linux 2023.
@@ -109,7 +108,16 @@ collector에서 정보를 수신할 수 있도록 하는 endpoint와 port 정보
 
 
 
-#### 3. 
+#### 3. Installation script 접근 권한 허용
+
+- Linux installation script는 ```sudo``` 권한이 필요합니다. 
+- Windows installation script는 ```administrator``` 권한이 필요하며, Powershell은 ```3.0``` 이상의 version이어야합니다. 
+
+#### [4. (optional) Log Observer connect와 연동하는 경우 - prerequisites](https://docs.splunk.com/observability/en/logs/set-up-logconnect.html#prerequisites)
+
+
+
+### 설치 가이드
 #### On Prem - Linux Agent Mode
 
 ```
