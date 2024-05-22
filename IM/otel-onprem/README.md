@@ -44,6 +44,15 @@ Network 에서 허용할 URL목록, 또는 Network 에서 허용할 목록에 �
 \*.signalfx.com
 \*.<YOUR_REALM>.signalfx.com
 ```
+|Rule|Port|Destination|
+|---|---|---|
+|Outbound|443|```/*.signalfx.com```|
+|Outbound|443|```/*<REALM>.signalfx.com```|
+|Inbound / Outbound |80|```packages.treasuredata.com```|
+|Inbound / Outbound |80|```splunk.jfrog.io```|
+|Inbound / Outbound |80|```jfrog-prod-use1-shared-virginia-main.s3.amazonaws.com```|
+
+
 
 도메인 베이스로 허용하고 싶은 경우 아래의 Domain을 allow list에 추가해주세요.
 ```
@@ -118,3 +127,6 @@ sudo sh /tmp/splunk-otel-collector.sh --realm <YOUR_REALM> -- <YOUR_ACCESS_TOKEN
 sudo systemctl restart splunk-otel-collector
 ```
 파일이 수정된 경우 splunk otel collector를 Restart합니다. 
+
+
+
