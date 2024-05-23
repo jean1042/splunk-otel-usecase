@@ -115,6 +115,25 @@ collector에서 정보를 수신할 수 있도록 하는 endpoint와 port 정보
 
 #### [4. (optional) Log Observer connect와 연동하는 경우 - prerequisites](https://docs.splunk.com/observability/en/logs/set-up-logconnect.html#prerequisites)
 
+- Splunk Observability Cloud에서 administrator role 필요
+
+- Splunk Enterprise host / network에서 IP address access 허용 [(여기)](https://docs.splunk.com/observability/en/logs/set-up-logconnect.html#prerequisites). 
+- Realm에 따라 위 docs에 적힌 IP address에 port ```8089``` 오픈이 필요합니다. 
+- Splunk observability의 log observer connect는 Splunk cloud ```search head```에 port ```8089```로 접근합니다. 
+
+#### [5. (optional) Kubernetes cluster에 collector를 설치하는 경우](https://docs.splunk.com/observability/en/gdi/opentelemetry/collector-kubernetes/install-k8s.html#nav-Install-on-Kubernetes)
+Splunk otel collector가 kubernetes에 설치될 때 Helm chart를 이용해 설치되며, 아래 kubernetes distribution을 지원합니다. 
+
+- Vanilla (unmodified version) Kubernetes 
+- Amazon Elastic Kubernetes Service 
+- Azure Kubernetes Service 
+- Google Kubernetes Engine 
+- Red Hat OpenShift 
+- Minikube 
+
+##### [Kubernetes Prerequisites]
+- Helm 3
+- K8S Cluster의 admin권한
 
 
 ### 설치 가이드
